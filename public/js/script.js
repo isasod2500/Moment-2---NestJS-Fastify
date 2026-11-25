@@ -157,3 +157,77 @@ async function editWonder(id, name, country, year, survived) {
         console.error("Could not update wonder:", err)
     }
 }
+
+async function deleteWonder(id) {
+    if(!confirm("Are you sure you want to delete this wonder?")) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/wonder/${id}`, {
+            method: "DELETE"
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            console.error("Could not delete wonder:", err);
+        }
+
+        getWonder();
+
+    } catch (err) {
+        console.error("Could not delete wonder:", err);
+    }
+}
+
+async function sendWonder(event)  {
+    event.preventDefault();
+
+    const form = document.getElementById("wonderForm");
+
+    const name = form.elements.namedItem("name").value.trim();
+    const country = form.elements.namedItem("country").value.trim();
+    const year = Number(form.elements.namedItem("year").value);
+    const survived = form.elements.namedItem("survived").checked;
+
+    if (!name || !country || !Number.isInteger(year)) {
+        alert("Field(s) missing valid values")
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/wonder", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            }, 
+            body: JSON.stringify({
+                name,
+                country,
+                year,
+                survived
+            })
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.success) {
+            throw new Error(result.message || "Could not save wonder");
+        }
+
+        form.reset();
+
+        await getWonder();
+    } catch(err) {
+        console.error("Could not save wonder:", err);
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+    getWonder();
+
+    const wonderForm = document.getElementById("wonderForm");
+
+    wonderForm.addeventListener("submit", sendWonder);
+})
