@@ -25,8 +25,13 @@
             <input type="text" id="name" name="name">
             <label for="country">Wonder country:</label>
             <input type="text" id="country" name="country">
-            <label for="year">Year (include BC / AD): </label>
+            <label for="year">Year:</label>
             <input type="text" id="year" name="year">
+            <label for="era">Era:</label>
+            <select id="era" name="era" required>
+              <option value="BC">BC</option>
+              <option value="AD">AD</option>
+            </select>
             <input type="submit" value="Submit" id="wonderSubmit">
           </fieldset>
         </form>

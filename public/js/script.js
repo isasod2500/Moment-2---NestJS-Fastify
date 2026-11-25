@@ -9,11 +9,11 @@ async function getWonder() {
             throw new Error(result.message || "Could not fetch wonders");
         }
 
-        displayWonder(result.data)
+        displayWonders(result.data)
     } catch (err) {
         console.error("Could not load wonders:", err);
 
-        document.getElementById("wonderrList").textContent = "Could not load wonders";
+        document.getElementById("wonderList").textContent = "Could not load wonders";
     }
 }
 
@@ -31,14 +31,17 @@ function displayWonders(wonders) {
 
     const list = document.createElement("ul");
 
-    wonders.forEacH((wonder) => {
+    wonders.forEach((wonder) => {
         const listItem = document.createElement("li");
 
         const heading = document.createElement("h3");
         heading.textContent = wonder.name;
 
         const info = document.createElement("p");
-        info.textContent = `${wonder.country}, ${wonder.year}, Survived: ${wonder.survived}`;
+        info.textContent = `${wonder.country}, ${wonder.year}${wonder.era}`;
+
+        const survived = document.createElement("p")
+        survived.textContent =  `Survived: ${wonder.survived}`
 
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
@@ -66,6 +69,7 @@ function displayWonders(wonders) {
         listItem.append(
             heading,
             info,
+            survived,
             editButton,
             deleteButton
         );
@@ -81,7 +85,7 @@ function createEditForm(wonder) {
     const fields = [
         { label: "Wonder name:", name: "name", type: "text", value: wonder.name },
         { label: "Country:", name: "country", type: "text", value: wonder.country },
-        { label: "Year:", name: "year", type: "number", value: wonder.year }
+        { label: "Year:", name: "year", type: "number", value: wonder.year },
     ];
 
     fields.forEach((field) => {
@@ -106,18 +110,36 @@ function createEditForm(wonder) {
 
     form.append(survivedLabel, survivedInput);
 
+    const eraLabel = document.createElement("label");
+    eraLabel.textContent = "Era:";
+
+    const eraSelect = document.createElement("select");
+    eraSelect.name = "era";
+
+    ["BC", "AD"].forEach((era) => {
+        const option = document.createElement("option");
+        option.value = era;
+        option.textContent = era;
+        eraSelect.appendChild(option);
+    });
+
+    eraSelect.value = wonder.era;
+
+    form.append(eraLabel, eraSelect);
+
     const saveButton = document.createElement("button");
     saveButton.type = "submit";
     saveButton.textContent = "Save changes";
 
     form.appendChild(saveButton);
 
-    form.addeventListener("submit", (event) => {
+    form.addEventListener("submit", (event) => {
         event.preventDefault();
 
         const name = form.elements.namedItem("name").value.trim();
         const country = form.elements.namedItem("country").value.trim();
         const year = Number(form.elements.namedItem("year").value);
+        const era = form.elements.namedItem("era").value;
         const survived = survivedInput.checked;
 
         if (!name || !country || !Number.isInteger(year)) {
@@ -125,23 +147,24 @@ function createEditForm(wonder) {
             return;
         }
 
-        editWonder(wonder._id, name, country, year, survived);
+        editWonder(wonder._id, name, country, year, era, survived);
     })
 
     return form;
 }
 
-async function editWonder(id, name, country, year, survived) {
+async function editWonder(id, name, country, year, era, survived) {
     try {
         const response = await fetch(`/api/wonder/${id}`, {
             method: "PUT",
             headers: {
-                "Content_Type": "application/json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify({
                 name,
                 country,
                 year,
+                era,
                 survived
             })
         });
@@ -159,7 +182,7 @@ async function editWonder(id, name, country, year, survived) {
 }
 
 async function deleteWonder(id) {
-    if(!confirm("Are you sure you want to delete this wonder?")) {
+    if (!confirm("Are you sure you want to delete this wonder?")) {
         return;
     }
 
@@ -171,7 +194,7 @@ async function deleteWonder(id) {
         const result = await response.json();
 
         if (!response.ok || !result.success) {
-            console.error("Could not delete wonder:", err);
+            console.error("Could not delete wonder:", result.message);
         }
 
         getWonder();
@@ -181,7 +204,7 @@ async function deleteWonder(id) {
     }
 }
 
-async function sendWonder(event)  {
+async function sendWonder(event) {
     event.preventDefault();
 
     const form = document.getElementById("wonderForm");
@@ -189,6 +212,7 @@ async function sendWonder(event)  {
     const name = form.elements.namedItem("name").value.trim();
     const country = form.elements.namedItem("country").value.trim();
     const year = Number(form.elements.namedItem("year").value);
+    const era = form.elements.namedItem("era").value;
     const survived = form.elements.namedItem("survived").checked;
 
     if (!name || !country || !Number.isInteger(year)) {
@@ -201,11 +225,12 @@ async function sendWonder(event)  {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
-            }, 
+            },
             body: JSON.stringify({
                 name,
                 country,
                 year,
+                era,
                 survived
             })
         });
@@ -219,7 +244,7 @@ async function sendWonder(event)  {
         form.reset();
 
         await getWonder();
-    } catch(err) {
+    } catch (err) {
         console.error("Could not save wonder:", err);
     }
 }
@@ -229,5 +254,5 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const wonderForm = document.getElementById("wonderForm");
 
-    wonderForm.addeventListener("submit", sendWonder);
+    wonderForm.addEventListener("submit", sendWonder);
 })
