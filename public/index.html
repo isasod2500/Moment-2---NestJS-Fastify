@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/js/script.js" defer></script>
+  <title>Startsida</title>
+</head>
+
+<body>
+  <main id="indexMain">
+    <h1>Wonders of the World</h1>
+    <article id="indexArticle">
+      <section id="wonderList">
+
+      </section>
+
+      <section id="addWonder">
+        <form id="wonderForm" method="POST">
+          <fieldset>
+            <legend>Add your own wonder!</legend>
+            <label for="name">Wonder name:</label>
+            <input type="text" id="name" name="name">
+            <label for="country">Wonder country:</label>
+            <input type="text" id="country" name="country">
+            <label for="year">Year (include BC / AD): </label>
+            <input type="text" id="year" name="year">
+            <input type="submit" value="Submit" id="wonderSubmit">
+          </fieldset>
+        </form>
+      </section>
+    </article>
+
+  </main>
+</body>
+
+</html>

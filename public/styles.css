@@ -1,0 +1,150 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 2rem;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #eafffa;
+    color: #234b45;
+}
+
+
+#indexMain {
+    background: #b3ffff;
+    text-align: center;
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 80, 80, 0.12);
+}
+
+#indexMain>h1 {
+    font-size: 2.5rem;
+    margin-top: 0.5rem;
+    margin-bottom: 2rem;
+    color: #176b68;
+}
+
+#indexArticle {
+    background-color: #b3ffd9;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    border-radius: 12px;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+
+#wonderList {
+    list-style: none;
+    padding-inline-start: 0;
+    margin: 0;
+}
+
+#wonderList h3 {
+    color: #176b68;
+    font-size: 1.4rem;
+    margin-bottom: 0.5rem;
+}
+
+#wonderList ul {
+    padding-inline-start: 0;
+}
+
+#wonderList li {
+    list-style: none;
+
+    background: rgba(255, 255, 255, 0.65);
+    padding: 1rem;
+    margin: 0.75rem auto;
+    max-width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 80, 80, 0.08);
+}
+
+#wonderForm {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#wonderForm fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    border: 2px solid #70d9bd;
+    border-radius: 12px;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+#wonderForm legend {
+    padding: 0 0.75rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #176b68;
+}
+
+fieldset label {
+    margin: 1rem 0 0.4rem;
+    text-align: left;
+    font-weight: bold;
+}
+
+fieldset input {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0 0 0.5rem;
+    border: 1px solid #8bcdbb;
+    border-radius: 7px;
+    font-size: 1rem;
+    background: white;
+}
+
+fieldset input:focus {
+    outline: none;
+    border-color: #168b79;
+    box-shadow: 0 0 0 3px rgba(22, 139, 121, 0.15);
+}
+
+#wonderForm input[type="submit"] {
+    margin-top: 1.5rem;
+    padding: 0.85rem;
+    background: #168b79;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+}
+
+#wonderForm input[type="submit"]:hover {
+    background: #106b5d;
+    transform: translateY(-2px);
+}
+
+
+@media (max-width: 600px) {
+    body {
+        padding: 0.75rem;
+    }
+
+    #indexMain {
+        margin: 0.5rem auto;
+        padding: 1rem;
+    }
+
+    #indexMain>h1 {
+        font-size: 1.8rem;
+    }
+
+    #indexArticle {
+        padding: 1rem;
+    }
+}
