@@ -41,7 +41,12 @@ function displayWonders(wonders) {
         info.textContent = `${wonder.country}, ${wonder.year}${wonder.era}`;
 
         const survived = document.createElement("p")
-        survived.textContent =  `Survived: ${wonder.survived}`
+        if (wonder.survived == false) {
+            survived.textContent = `Survived: No`
+        } else {
+            survived.textContent = `Survived: Yes`
+        }
+
 
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
@@ -85,7 +90,7 @@ function createEditForm(wonder) {
     const fields = [
         { label: "Wonder name:", name: "name", type: "text", value: wonder.name },
         { label: "Country:", name: "country", type: "text", value: wonder.country },
-        { label: "Year:", name: "year", type: "number", value: wonder.year },
+        { label: "Year built:", name: "year", type: "number", value: wonder.year },
     ];
 
     fields.forEach((field) => {

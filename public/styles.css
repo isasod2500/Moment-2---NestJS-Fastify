@@ -10,7 +10,6 @@ body {
     color: #234b45;
 }
 
-
 #indexMain {
     background: #b3ffff;
     text-align: center;
@@ -39,6 +38,7 @@ body {
 }
 
 
+
 #wonderList {
     list-style: none;
     padding-inline-start: 0;
@@ -57,7 +57,6 @@ body {
 
 #wonderList li {
     list-style: none;
-
     background: rgba(255, 255, 255, 0.65);
     padding: 1rem;
     margin: 0.75rem auto;
@@ -66,16 +65,17 @@ body {
     box-shadow: 0 2px 6px rgba(0, 80, 80, 0.08);
 }
 
+
 #wonderForm {
     max-width: 500px;
     margin: 0 auto;
+    width: 100%;
 }
 
 #wonderForm fieldset {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
     border: 2px solid #70d9bd;
     border-radius: 12px;
     padding: 1.5rem;
@@ -89,13 +89,17 @@ body {
     color: #176b68;
 }
 
-fieldset label {
+#wonderForm label {
     margin: 1rem 0 0.4rem;
     text-align: left;
     font-weight: bold;
 }
 
-fieldset input {
+
+
+#wonderForm input[type="text"],
+#wonderForm input[type="number"],
+#wonderForm select {
     width: 100%;
     padding: 0.75rem;
     margin: 0 0 0.5rem;
@@ -103,15 +107,47 @@ fieldset input {
     border-radius: 7px;
     font-size: 1rem;
     background: white;
+    color: #234b45;
 }
 
-fieldset input:focus {
+#wonderForm input:focus,
+#wonderForm select:focus {
     outline: none;
     border-color: #168b79;
     box-shadow: 0 0 0 3px rgba(22, 139, 121, 0.15);
 }
 
+
+#wonderForm #era {
+    width: 90px;
+    cursor: pointer;
+}
+
+
+.survivedField {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0.75rem;
+}
+
+#wonderForm .survivedField label {
+    margin: 0;
+    cursor: pointer;
+}
+
+#wonderForm input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #168b79;
+    cursor: pointer;
+}
+
+
+
 #wonderForm input[type="submit"] {
+    width: 100%;
     margin-top: 1.5rem;
     padding: 0.85rem;
     background: #168b79;
@@ -130,6 +166,7 @@ fieldset input:focus {
 }
 
 
+
 @media (max-width: 600px) {
     body {
         padding: 0.75rem;
@@ -145,6 +182,10 @@ fieldset input:focus {
     }
 
     #indexArticle {
+        padding: 1rem;
+    }
+
+    #wonderForm fieldset {
         padding: 1rem;
     }
 }
