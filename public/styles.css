@@ -10,7 +10,6 @@ body {
     color: #234b45;
 }
 
-
 #indexMain {
     background: #b3ffff;
     text-align: center;
@@ -39,6 +38,7 @@ body {
 }
 
 
+
 #wonderList {
     list-style: none;
     padding-inline-start: 0;
@@ -57,7 +57,6 @@ body {
 
 #wonderList li {
     list-style: none;
-
     background: rgba(255, 255, 255, 0.65);
     padding: 1rem;
     margin: 0.75rem auto;
@@ -66,16 +65,17 @@ body {
     box-shadow: 0 2px 6px rgba(0, 80, 80, 0.08);
 }
 
+
 #wonderForm {
     max-width: 500px;
     margin: 0 auto;
+    width: 100%;
 }
 
 #wonderForm fieldset {
     display: flex;
     flex-direction: column;
     align-items: stretch;
-    justify-content: center;
     border: 2px solid #70d9bd;
     border-radius: 12px;
     padding: 1.5rem;
@@ -89,13 +89,17 @@ body {
     color: #176b68;
 }
 
-fieldset label {
+#wonderForm label {
     margin: 1rem 0 0.4rem;
     text-align: left;
     font-weight: bold;
 }
 
-fieldset input {
+
+
+#wonderForm input[type="text"],
+#wonderForm input[type="number"],
+#wonderForm select {
     width: 100%;
     padding: 0.75rem;
     margin: 0 0 0.5rem;
@@ -103,30 +107,246 @@ fieldset input {
     border-radius: 7px;
     font-size: 1rem;
     background: white;
+    color: #234b45;
 }
 
-fieldset input:focus {
+#wonderForm input:focus,
+#wonderForm select:focus {
     outline: none;
     border-color: #168b79;
     box-shadow: 0 0 0 3px rgba(22, 139, 121, 0.15);
 }
 
-#wonderForm input[type="submit"] {
-    margin-top: 1.5rem;
-    padding: 0.85rem;
-    background: #168b79;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
+
+#wonderForm #era {
+    width: 90px;
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
 }
 
-#wonderForm input[type="submit"]:hover {
-    background: #106b5d;
+
+.survivedDiv {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 0.75rem;
+}
+
+#wonderForm .survivedDiv label {
+    margin: 0;
+    cursor: pointer;
+}
+
+#wonderForm input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    accent-color: #168b79;
+    cursor: pointer;
+}
+
+
+
+
+button {
+    padding: 0.65rem 1.2rem;
+    border: none;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+
+button:hover {
     transform: translateY(-2px);
+}
+
+
+button.editButton {
+    background-color: #8bcdbb;
+    color: #234b45;
+}
+
+button.editButton:hover {
+    background-color: #6bb9a4;
+}
+
+
+button.deleteButton {
+    background-color: #d97878;
+    color: white;
+}
+
+button.deleteButton:hover {
+    background-color: #c45c5c;
+}
+
+
+button.saveButton {
+    background-color: #168b79;
+    color: white;
+}
+
+button.saveButton:hover {
+    background-color: #116f61;
+}
+
+#wonderList li {
+    position: relative;
+    padding-right: 4rem;
+}
+
+
+.viewButton {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: transparent;
+    color: #176b68;
+
+    font-size: 2rem;
+    font-weight: bold;
+
+    border: none;
+    padding: 0 0.5rem;
+    cursor: pointer;
+}
+
+.viewButton:hover {
+    background: transparent;
+    color: #168b79;
+    transform: translate(3px, -50%);
+}
+
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    background-color: #f0f8f5;
+    border: 1px solid #8bcdbb;
+    border-radius: 10px;
+
+    padding: 1.2rem;
+    margin-top: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.editForm label {
+    color: #234b45;
+    font-weight: 600;
+    margin-top: 0.3rem;
+}
+
+
+.editForm input[type="text"],
+.editForm input[type="number"],
+.editForm select {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 0.65rem;
+    border: 1px solid #8bcdbb;
+    border-radius: 7px;
+
+    font-size: 1rem;
+    color: #234b45;
+    background-color: white;
+}
+
+
+.editForm input:focus,
+.editForm select:focus {
+    outline: none;
+    border-color: #168b79;
+    box-shadow: 0 0 4px rgba(22, 139, 121, 0.3);
+}
+
+
+.editForm select {
+    width: 90px;
+    cursor: pointer;
+}
+
+
+#wonderForm>button {
+    margin-top: 1rem;
+}
+
+
+.eraField {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+}
+
+#wonderForm .eraField label {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#wonderForm .eraField select,
+.editForm .eraField select {
+    width: 90px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.survivedField {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 1rem 0;
+}
+
+#wonderForm .survivedField label,
+.editForm .survivedField label {
+    margin: 0;
+    cursor: pointer;
+}
+
+.survivedField input[type="checkbox"] {
+    appearance: auto;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    accent-color: #168b79;
+    cursor: pointer;
+}
+
+.editForm .eraField {
+    align-items: flex-start;
+}
+
+.editForm .eraField label {
+    margin-top: 0.3rem;
+}
+
+
+.editForm .survivedField {
+    justify-content: flex-start;
+}
+
+
+.saveButton {
+    background-color: #168b79;
+    color: white;
+}
+
+.saveButton:hover {
+    background-color: #116f61;
 }
 
 
@@ -145,6 +365,10 @@ fieldset input:focus {
     }
 
     #indexArticle {
+        padding: 1rem;
+    }
+
+    #wonderForm fieldset {
         padding: 1rem;
     }
 }

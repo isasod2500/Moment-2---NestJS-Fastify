@@ -2,7 +2,7 @@
 import fastify from 'fastify';
 import fastifyMongodb from '@fastify/mongodb';
 import fastifyStatic from '@fastify/static';
-import { ObjectId, type OptionalUnlessRequiredId } from 'mongodb';
+import { ObjectId } from 'mongodb';
 import path from 'node:path';
 import 'dotenv/config';
 
@@ -14,9 +14,11 @@ const server = fastify({
 
 
 interface Wonder {
-    wonder: string;
+    name: string;
     country: string;
-    year: string;
+    year: number;
+    era: "BC" | "AD";
+    survived: boolean;
 }
 
 
@@ -48,10 +50,10 @@ server.register(fastifyStatic, {
 
 // Hämta collection
 function getWonders() {
-    return server.mongo.db!.collection<WonderDocument>('wonders');
+    return server.mongo.db!.collection<Wonder>('wonders');
 }
 
-// GET – Hämta alla underverk
+// Hämta alla underverk
 server.get('/api/wonder', async (request, reply) => {
     try {
         const wonders = await getWonders().find({}).toArray();
@@ -71,15 +73,57 @@ server.get('/api/wonder', async (request, reply) => {
     }
 });
 
-// POST – Lägg till ett nytt underverk
+server.get<{ Params: { id: string } }>(
+    "/api/wonder/:id",
+    async (request, reply) => {
+        try {
+            const { id } = request.params;
+
+            if (!ObjectId.isValid(id)) {
+                return reply.code(400).send({
+                    success: false,
+                    message: "Invalid wonder ID"
+                });
+            }
+
+            const wonder = await server.mongo.db!
+                .collection<Wonder>("wonders")
+                .findOne({ _id: new ObjectId(id) });
+
+            if (!wonder) {
+                return reply.code(404).send({
+                    success: false,
+                    message: "Wonder not found"
+                });
+            }
+
+            return reply.send({
+                success: true,
+                data: wonder
+            });
+
+        } catch (err) {
+            request.log.error(err);
+
+            return reply.code(500).send({
+                success: false,
+                message: "Could not fetch wonder"
+            });
+        }
+    }
+);
+
+//Lägg till ett nytt underverk
 server.post<{ Body: Wonder }>('/api/wonder', async (request, reply) => {
     try {
-        const { wonder, country, year } = request.body;
+        const { name, country, year, era, survived } = request.body;
 
         if (
-            typeof wonder !== 'string' || !wonder.trim() ||
+            typeof name !== 'string' || !name.trim() ||
             typeof country !== 'string' || !country.trim() ||
-            typeof year !== 'string' || !year.trim()
+            !Number.isInteger(year) || year <= 0 ||
+            typeof survived !== "boolean" ||
+            typeof era !== "string" || !["BC", "AD"].includes(era)
         ) {
             return reply.code(400).send({
                 success: false,
@@ -88,14 +132,14 @@ server.post<{ Body: Wonder }>('/api/wonder', async (request, reply) => {
         }
 
         const newWonder: Wonder = {
-            wonder: wonder.trim(),
+            name: name.trim(),
             country: country.trim(),
-            year: year.trim()
+            year,
+            era,
+            survived
         };
 
-        const result = await getWonders().insertOne(
-            newWonder as OptionalUnlessRequiredId<WonderDocument>
-        );
+        const result = await getWonders().insertOne(newWonder)
 
         return reply.code(201).send({
             success: true,
@@ -115,14 +159,14 @@ server.post<{ Body: Wonder }>('/api/wonder', async (request, reply) => {
     }
 });
 
-// PUT – Uppdatera ett befintligt underverk
+//Uppdatera ett befintligt underverk
 server.put<{
     Params: WonderParams;
     Body: Wonder;
 }>('/api/wonder/:id', async (request, reply) => {
     try {
         const { id } = request.params;
-        const { wonder, country, year } = request.body;
+        const { name, country, year, era, survived } = request.body;
 
         if (!ObjectId.isValid(id)) {
             return reply.code(400).send({
@@ -132,9 +176,11 @@ server.put<{
         }
 
         if (
-            typeof wonder !== 'string' || !wonder.trim() ||
+            typeof name !== 'string' || !name.trim() ||
             typeof country !== 'string' || !country.trim() ||
-            typeof year !== 'string' || !year.trim()
+            !Number.isInteger(year) || year <= 0 ||
+            typeof survived !== "boolean" ||
+            typeof era !== "string" || !["BC", "AD"].includes(era)
         ) {
             return reply.code(400).send({
                 success: false,
@@ -146,9 +192,11 @@ server.put<{
             { _id: new ObjectId(id) },
             {
                 $set: {
-                    wonder: wonder.trim(),
+                    name: name.trim(),
                     country: country.trim(),
-                    year: year.trim()
+                    year,
+                    era,
+                    survived
                 }
             }
         );
@@ -175,7 +223,7 @@ server.put<{
     }
 });
 
-// DELETE – Ta bort ett underverk
+//Ta bort ett underverk
 server.delete<{
     Params: WonderParams;
 }>('/api/wonder/:id', async (request, reply) => {

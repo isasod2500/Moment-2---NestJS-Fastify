@@ -25,10 +25,22 @@
             <input type="text" id="name" name="name">
             <label for="country">Wonder country:</label>
             <input type="text" id="country" name="country">
-            <label for="year">Year (include BC / AD): </label>
-            <input type="text" id="year" name="year">
-            <input type="submit" value="Submit" id="wonderSubmit">
+            <label for="year">Year:</label>
+            <input type="number" id="year" name="year">
+
+            <div class="eraField">
+              <label for="era">Era:</label>
+              <select id="era" name="era" required>
+                <option value="BC">BC</option>
+                <option value="AD">AD</option>
+              </select>
+            </div>
+            <div class="survivedField">
+              <label for="survived">Survived:</label>
+              <input type="checkbox" id="survived" name="survived">
+            </div>
           </fieldset>
+          <button type="submit" class="saveButton">Add wonder</button>
         </form>
       </section>
     </article>
