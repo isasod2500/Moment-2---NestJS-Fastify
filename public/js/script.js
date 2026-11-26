@@ -50,10 +50,12 @@ function displayWonders(wonders) {
 
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
+        editButton.classList.add("editButton")
         editButton.type = "button"
 
         const deleteButton = document.createElement("button");
         deleteButton.textContent = "Delete";
+        deleteButton.classList.add("deleteButton")
         deleteButton.type = "button";
 
         editButton.addEventListener("click", () => {
@@ -86,6 +88,7 @@ function displayWonders(wonders) {
 
 function createEditForm(wonder) {
     const form = document.createElement("form");
+    form.classList.add("editForm");
 
     const fields = [
         { label: "Wonder name:", name: "name", type: "text", value: wonder.name },
@@ -105,6 +108,9 @@ function createEditForm(wonder) {
         form.append(label, input);
     })
 
+    const survivedDiv = document.createElement("div")
+    survivedDiv.classList.add("survivedDiv")
+
     const survivedLabel = document.createElement("label");
     survivedLabel.textContent = "Survived:";
 
@@ -113,7 +119,11 @@ function createEditForm(wonder) {
     survivedInput.name = "survived";
     survivedInput.checked = wonder.survived;
 
-    form.append(survivedLabel, survivedInput);
+    survivedDiv.append(survivedLabel, survivedInput)
+    form.append(survivedDiv);
+
+    const eraDiv = document.createElement("div");
+    eraDiv.classList.add("eraField");
 
     const eraLabel = document.createElement("label");
     eraLabel.textContent = "Era:";
@@ -130,10 +140,12 @@ function createEditForm(wonder) {
 
     eraSelect.value = wonder.era;
 
-    form.append(eraLabel, eraSelect);
+    eraDiv.append(eraLabel, eraSelect);
+    form.appendChild(eraDiv);
 
     const saveButton = document.createElement("button");
     saveButton.type = "submit";
+    saveButton.classList.add("saveButton");
     saveButton.textContent = "Save changes";
 
     form.appendChild(saveButton);

@@ -124,14 +124,14 @@ body {
 }
 
 
-.survivedField {
+.survivedDiv {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-top: 0.75rem;
 }
 
-#wonderForm .survivedField label {
+#wonderForm .survivedDiv label {
     margin: 0;
     cursor: pointer;
 }
@@ -146,25 +146,179 @@ body {
 
 
 
-#wonderForm input[type="submit"] {
-    width: 100%;
-    margin-top: 1.5rem;
-    padding: 0.85rem;
-    background: #168b79;
-    color: white;
+
+button {
+    padding: 0.65rem 1.2rem;
     border: none;
-    border-radius: 8px;
-    font-size: 1rem;
-    font-weight: bold;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background 0.2s, transform 0.2s;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-#wonderForm input[type="submit"]:hover {
-    background: #106b5d;
+
+button:hover {
     transform: translateY(-2px);
 }
 
+
+button.editButton {
+    background-color: #8bcdbb;
+    color: #234b45;
+}
+
+button.editButton:hover {
+    background-color: #6bb9a4;
+}
+
+
+button.deleteButton {
+    background-color: #d97878;
+    color: white;
+}
+
+button.deleteButton:hover {
+    background-color: #c45c5c;
+}
+
+
+button.saveButton {
+    background-color: #168b79;
+    color: white;
+}
+
+button.saveButton:hover {
+    background-color: #116f61;
+}
+
+
+.editForm {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+
+    background-color: #f0f8f5;
+    border: 1px solid #8bcdbb;
+    border-radius: 10px;
+
+    padding: 1.2rem;
+    margin-top: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.editForm label {
+    color: #234b45;
+    font-weight: 600;
+    margin-top: 0.3rem;
+}
+
+
+.editForm input[type="text"],
+.editForm input[type="number"],
+.editForm select {
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 0.65rem;
+    border: 1px solid #8bcdbb;
+    border-radius: 7px;
+
+    font-size: 1rem;
+    color: #234b45;
+    background-color: white;
+}
+
+
+.editForm input:focus,
+.editForm select:focus {
+    outline: none;
+    border-color: #168b79;
+    box-shadow: 0 0 4px rgba(22, 139, 121, 0.3);
+}
+
+
+.editForm select {
+    width: 90px;
+    cursor: pointer;
+}
+
+
+#wonderForm>button {
+    margin-top: 1rem;
+}
+
+
+.eraField {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.4rem;
+}
+
+#wonderForm .eraField label {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+#wonderForm .eraField select,
+.editForm .eraField select {
+    width: 90px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+.survivedField {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 1rem 0;
+}
+
+#wonderForm .survivedField label,
+.editForm .survivedField label {
+    margin: 0;
+    cursor: pointer;
+}
+
+.survivedField input[type="checkbox"] {
+    appearance: auto;
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    margin: 0;
+    padding: 0;
+    accent-color: #168b79;
+    cursor: pointer;
+}
+
+.editForm .eraField {
+    align-items: flex-start;
+}
+
+.editForm .eraField label {
+    margin-top: 0.3rem;
+}
+
+
+.editForm .survivedField {
+    justify-content: flex-start;
+}
+
+
+.saveButton {
+    background-color: #168b79;
+    color: white;
+}
+
+.saveButton:hover {
+    background-color: #116f61;
+}
 
 
 @media (max-width: 600px) {
