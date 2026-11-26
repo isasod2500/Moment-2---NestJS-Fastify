@@ -1,6 +1,7 @@
 # Laboration 2.1 Ramverk
 
 ## [Render](https://lab2-2-nestjs-fastify.onrender.com/)
+## `clone https://github.com/isasod2500/Moment-2---NestJS-Fastify.git`
 
 Denna webbplats är skapad med hjälp av NestJS Fastify som backend ramverk och vanlig traditionell HTML/CSS med JavaScript för frontend. Webbplatsen är en kort lista över världens underverk där det från början finns sju stycken från antika världen.
 Med formulär kan man lägga till sina egna, med validering för fälten. Dessa sparas i en MongoDB databas och hämtas ut med CRUD-förfrågningar.
