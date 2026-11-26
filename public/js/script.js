@@ -1,5 +1,6 @@
 "use strict";
 
+
 async function getWonder() {
     try {
         const response = await fetch("/api/wonder");
@@ -97,8 +98,14 @@ function displayWonders(wonders) {
 }
 
 function createEditForm(wonder) {
+
     const form = document.createElement("form");
     form.classList.add("editForm");
+
+    const errors = []
+    errors.length = 0;
+
+
 
     const fields = [
         { label: "Wonder name:", name: "name", type: "text", value: wonder.name },
@@ -160,6 +167,14 @@ function createEditForm(wonder) {
 
     form.appendChild(saveButton);
 
+    const editErrorList = document.createElement("ul")
+    editErrorList.classList.add("editErrorList")
+    editErrorList.innerHTML = ""
+
+    form.appendChild(editErrorList);
+
+
+
     form.addEventListener("submit", (event) => {
         event.preventDefault();
 
@@ -169,10 +184,32 @@ function createEditForm(wonder) {
         const era = form.elements.namedItem("era").value;
         const survived = survivedInput.checked;
 
-        if (!name || !country || !Number.isInteger(year)) {
-            alert("Field(s) missing valid value.")
+        if (!name || name.length < 3) {
+
+            errors.push("Wonder name missing or too short.")
+        }
+
+        if (!country || country.length < 4) {
+
+            errors.push("Country name missing or too short.")
+        }
+
+
+        if (!Number.isInteger(year) || year <= 0) {
+
+            errors.push("Wonder year missing or invalid")
+        }
+
+        if (errors.length > 0) {
+            errors.forEach(error => {
+                let errorLine = document.createElement("li")
+                errorLine.innerHTML = error
+                editErrorList.appendChild(errorLine)
+
+            });
             return;
         }
+
 
         editWonder(wonder._id, name, country, year, era, survived);
     })
@@ -234,6 +271,11 @@ async function deleteWonder(id) {
 async function sendWonder(event) {
     event.preventDefault();
 
+    const errors = []
+    errors.length = 0;
+    const errorList = document.getElementById("errorList")
+    errorList.innerHTML = ""
+
     const form = document.getElementById("wonderForm");
 
     const name = form.elements.namedItem("name").value.trim();
@@ -242,8 +284,29 @@ async function sendWonder(event) {
     const era = form.elements.namedItem("era").value;
     const survived = form.elements.namedItem("survived").checked;
 
-    if (!name || !country || !Number.isInteger(year)) {
-        alert("Field(s) missing valid values")
+    if (!name || name.length < 3) {
+
+        errors.push("Wonder name missing or too short.")
+    }
+
+    if (!country || country.length < 4) {
+
+        errors.push("Country name missing or too short.")
+    }
+
+
+    if (!Number.isInteger(year) || year <= 0) {
+
+        errors.push("Wonder year missing or invalid")
+    }
+
+    if (errors.length > 0) {
+        errors.forEach(error => {
+            let errorLine = document.createElement("li")
+            errorLine.innerHTML = error
+            errorList.appendChild(errorLine)
+
+        });
         return;
     }
 

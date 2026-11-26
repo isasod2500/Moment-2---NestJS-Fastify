@@ -25,7 +25,7 @@ async function launch() {
         console.error(`Database not found`);
     }
     console.log(allWonders);
-    // Registrera route
+  
     server.get('/auth', {
         preValidation: async (request, reply) => {
             const { username } = request.query;
@@ -39,7 +39,7 @@ async function launch() {
         const customerHeader = request.headers['h-custom'];
         return { success: true };
     });
-    // Starta servern
+    
     await server.listen({ port: 8080 });
 }
 launch().catch(err => {
