@@ -192,6 +192,35 @@ button.saveButton:hover {
     background-color: #116f61;
 }
 
+#wonderList li {
+    position: relative;
+    padding-right: 4rem;
+}
+
+
+.viewButton {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+
+    background: transparent;
+    color: #176b68;
+
+    font-size: 2rem;
+    font-weight: bold;
+
+    border: none;
+    padding: 0 0.5rem;
+    cursor: pointer;
+}
+
+.viewButton:hover {
+    background: transparent;
+    color: #168b79;
+    transform: translate(3px, -50%);
+}
+
 
 .editForm {
     display: flex;

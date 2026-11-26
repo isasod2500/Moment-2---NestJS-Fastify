@@ -73,6 +73,46 @@ server.get('/api/wonder', async (request, reply) => {
     }
 });
 
+server.get<{ Params: { id: string } }>(
+    "/api/wonder/:id",
+    async (request, reply) => {
+        try {
+            const { id } = request.params;
+
+            if (!ObjectId.isValid(id)) {
+                return reply.code(400).send({
+                    success: false,
+                    message: "Invalid wonder ID"
+                });
+            }
+
+            const wonder = await server.mongo.db!
+                .collection<Wonder>("wonders")
+                .findOne({ _id: new ObjectId(id) });
+
+            if (!wonder) {
+                return reply.code(404).send({
+                    success: false,
+                    message: "Wonder not found"
+                });
+            }
+
+            return reply.send({
+                success: true,
+                data: wonder
+            });
+
+        } catch (err) {
+            request.log.error(err);
+
+            return reply.code(500).send({
+                success: false,
+                message: "Could not fetch wonder"
+            });
+        }
+    }
+);
+
 //Lägg till ett nytt underverk
 server.post<{ Body: Wonder }>('/api/wonder', async (request, reply) => {
     try {

@@ -47,6 +47,15 @@ function displayWonders(wonders) {
             survived.textContent = `Survived: Yes`
         }
 
+        const viewButton = document.createElement("button");
+        viewButton.textContent = "→";
+        viewButton.classList.add("viewButton");
+        viewButton.type = "button";
+        viewButton.setAttribute("aria-label", `View ${wonder.name}`);
+
+        viewButton.addEventListener("click", () => {
+            window.location.href = `/wonder.html?id=${wonder._id}`;
+        });
 
         const editButton = document.createElement("button");
         editButton.textContent = "Edit";
@@ -77,6 +86,7 @@ function displayWonders(wonders) {
             heading,
             info,
             survived,
+            viewButton,
             editButton,
             deleteButton
         );
